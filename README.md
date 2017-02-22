@@ -32,8 +32,8 @@ panel user and log in at `http://127.0.0.1:8000/admin`.
 python manage.py createsuperuser
 ```
 
-To add a service module, start by declaring it in settings.py. Also, include the
-module's URL configuration in urls.py:
+To add a service module, start by declaring it in `settings.py`. Also, include
+the module's URL configuration in `urls.py`:
 
 ```python
 INSTALLED_APPS = [
