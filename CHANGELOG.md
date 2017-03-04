@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org).
 
+## 0.4.0 - 2017-03-04
+
+### Added
+
+  - Package README in reStructuredText format.
+  - Package setup configuration.
+  - Gradle build script for this project.
+  - Docker and docker-compose configuration for this project.
+  - Tests for admin module.
+
+### Fixed
+
+  - Empty .gitignore list.
+  - Package usage instructions from README.
+  - Package setup errata and missing information.
+
 ## 0.3.0 - 2017-02-22
 
 ### Added

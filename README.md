@@ -4,58 +4,68 @@ An end point to run Django services on.
 
 ## Installation
 
-The application depends on python and python-pip. It is also recommended to
-install and use a virutal environment.
+This projects uses Gradle (at least version 3.3) as its build system along with
+a Docker and docker-compose wrapper for continuous development. On Debian Linux
+distributions Gradle can be installed with the following commands:
 
 ```bash
-sudo apt-get install python python-pip
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:cwchien/gradle
+sudo apt-get update
+sudo apt-get install default-jdk gradle=3.4-0ubuntu1
 ```
+
+If you prefer to install Docker and docker-compose (highly recommended) refer to
+the [official instructions][install-docker-compose].
 
 ## Usage
 
-To start the service set the environment variables, install the package and run
-the development server. After this the end point will be available at
-`http://127.0.0.1:8000/`.
+To start the end point get the project and install its dependencies. Once the
+migrations have successfully been applied, create the administration panel user,
+run the development server and log in at `http://127.0.0.1:8000/admin`.
 
 ```bash
 git clone https://github.com/marcbperez/django-endpoint
 cd reportservice-flask
-pip install .
-python manage.py migrate
+sudo gradle dependencies
+gradle install
+gradle migrate
+gradle createSu
 python manage.py runserver
 ```
 
-Once the migrations have successfully been applied, create the administration
-panel user and log in at `http://127.0.0.1:8000/admin`.
-
-```bash
-python manage.py createsuperuser
-```
-
-To add a service module, start by declaring it in `settings.py`. Also, include
-the module's URL configuration in `urls.py`:
+To add a service module, start by declaring it in `settings.py` and include the
+module's URL configuration in `urls.py`.
 
 ```python
 INSTALLED_APPS = [
     ...
-    'tasklist',
+    'myservice',
 ]
 ```
 
 ```python
 urlpatterns = [
     ...
-    url(r'^tasklist/', include('tasklist.urls')),
+    url(r'^myservice/', include('myservice.urls')),
 ]
 ```
 
 ## Testing
 
-To test each indidual service use `python manage.py test`. For example, if we
-wanted to run the tests for the `tasklist` service:
+Tests will be executed by default every time the project is built. To run them
+manually start a new build or use Gradle's test task. For a complete list of
+tasks check `gradle tasks --all`.
 
 ```bash
-python setup.py test tasklist
+gradle test
+```
+
+A continuous build cycle can be executed with `gradle --continuous` inside a
+virtual environment, or with Docker.
+
+```
+sudo docker-compose up
 ```
 
 ## Troubleshooting
@@ -92,3 +102,4 @@ This project is licensed under the [Apache License Version 2.0][license].
 [changelog]: CHANGELOG.md
 [license]: LICENSE
 [semver]: http://semver.org
+[install-docker-compose]: https://docs.docker.com/compose/install/
