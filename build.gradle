@@ -1,12 +1,13 @@
-defaultTasks "watch", "build", "install", "migrate", "createSu", "test"
+defaultTasks "watch", "build", "install", "makeMigrations", "migrate",
+  "createSu", "test"
 
 def path = System.getProperty("user.dir")
 def srcDir = "${path}/endpoint"
 def aptPackages = ["python-pip", "pandoc"]
 
-def suUsername = "admin"
+def suUsername = "administrator"
 def suPassword = "pass"
-def suEmail = "admin@example.com"
+def suEmail = "administrator@example.com"
 
 task watch(type: Exec) {
   def sourceFiles = fileTree(srcDir) {
@@ -63,6 +64,15 @@ task install(type: Exec) {
   workingDir path
   commandLine "pip"
   args = ["install", "-e", "."]
+
+  new ByteArrayOutputStream()
+}
+
+task makeMigrations(type: Exec) {
+  description "Performs data migrations for this module."
+  workingDir path
+  commandLine "python"
+  args = ["manage.py", "makemigrations"]
 
   new ByteArrayOutputStream()
 }
