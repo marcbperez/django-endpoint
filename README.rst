@@ -16,7 +16,7 @@ the following commands:
     sudo apt-get install software-properties-common
     sudo add-apt-repository ppa:cwchien/gradle
     sudo apt-get update
-    sudo apt-get install default-jdk gradle=3.4-0ubuntu1
+    sudo apt-get install default-jdk gradle-3.4
 
 If you prefer to install Docker and docker-compose (highly recommended)
 refer to the `official
@@ -33,9 +33,10 @@ administration panel user, run the development server and log in at
 .. code:: bash
 
     git clone https://github.com/marcbperez/django-endpoint
-    cd reportservice-flask
+    cd django-endpoint
     sudo gradle dependencies
     gradle install
+    gradle makeMigrations
     gradle migrate
     gradle createSu
     python manage.py runserver
